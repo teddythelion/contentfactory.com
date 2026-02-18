@@ -1,0 +1,7 @@
+ignoredBuiltDependencies:
+  - grpc
+
+onlyBuiltDependencies:
+  - '@tailwindcss/oxide'
+  - canvas
+  - esbuild
