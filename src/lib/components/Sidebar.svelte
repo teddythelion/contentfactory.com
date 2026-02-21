@@ -7,6 +7,11 @@
 
 	let { children } = $props();
 	let showAuthModal = $state(false);
+
+	function closeSidebar() {
+    const drawer = document.getElementById('my-drawer-4') as HTMLInputElement;
+    if (drawer) drawer.checked = false;
+}
 </script>
 
 <div class="drawer lg:drawer-open">
@@ -32,7 +37,7 @@
 
 			<div class="ml-3 flex items-center gap-1">
 				<img src={logo} alt="Content Factory Logo" class="h-8 w-auto sm:h-10" />
-				<span class="text-lg font-semibold sm:text-xl">Content Factory</span>
+				<span class="text-xs font-semibold sm:text-base lg:text-lg">Content Factory</span>
 			</div>
 
 			<!-- Auth buttons: Show login/signup if not logged in, show UserMenu if logged in -->
@@ -80,6 +85,7 @@
 							? 'active'
 							: ''}"
 						data-tip="Homepage"
+						onclick={closeSidebar}
 					>
 						<!-- Home icon -->
 						<svg
@@ -108,7 +114,9 @@
 							? 'active'
 							: ''}"
 						data-tip="Text or Image to Video with Editing"
+						onclick={closeSidebar}
 					>
+
 						<!-- Video icon -->
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -141,6 +149,7 @@
 							? 'active'
 							: ''}"
 						data-tip="Text to Image"
+						onclick={closeSidebar}
 					>
 						<!-- Image icon -->
 						<svg
@@ -171,6 +180,7 @@
 							? 'active'
 							: ''}"
 						data-tip="Image Edit with Ultra Refinement"
+						onclick={closeSidebar}
 					>
 						<!-- Edit icon -->
 						<svg
@@ -199,6 +209,7 @@
 							? 'active'
 							: ''}"
 						data-tip="Settings"
+						onclick={closeSidebar}
 					>
 						<!-- Settings icon -->
 						<svg
@@ -226,6 +237,7 @@
 							? 'active'
 							: ''}"
 						data-tip="Content Library"
+						onclick={closeSidebar}
 					>
 						<!-- Content Library-->
 						<svg

@@ -1,8 +1,24 @@
 <script lang="ts">
 	import { authStore } from '$lib/stores/auth.store';
 	import { goto } from '$app/navigation';
+	import { onMount, onDestroy } from 'svelte';
 
 	let dropdownOpen = $state(false);
+	let dropdownRef: HTMLDivElement;
+
+	function handleClickOutside(event: Event) {
+		if (dropdownRef && !dropdownRef.contains(event.target as Node)) {
+			dropdownOpen = false;
+		}
+	}
+
+	onMount(() => {
+		document.addEventListener('click', handleClickOutside);
+	});
+
+	onDestroy(() => {
+		document.removeEventListener('click', handleClickOutside);
+	});
 
 	async function handleSignOut() {
 		const result = await authStore.signOut();
@@ -19,7 +35,7 @@
 </script>
 
 {#if $authStore.user}
-	<div class="dropdown dropdown-end">
+	<div class="relative" bind:this={dropdownRef}>
 		<button class="btn avatar btn-circle btn-ghost" onclick={() => (dropdownOpen = !dropdownOpen)}>
 			<div class="w-10 rounded-full">
 				{#if $authStore.user.photoURL}
@@ -35,13 +51,13 @@
 		</button>
 
 		{#if dropdownOpen}
-			<ul class="dropdown-content menu z-[1] mt-3 w-52 menu-sm rounded-box bg-base-200 p-2 shadow">
+			<ul class="absolute right-0 top-full z-50 mt-3 w-52 rounded-box bg-base-200 p-2 shadow-lg menu menu-sm">
 				<li class="menu-title">
 					<span class="font-bold">{$authStore.user.displayName || 'User'}</span>
 					<span class="text-xs opacity-60">{$authStore.user.email}</span>
 				</li>
 				<li>
-					<a href="/settings" onclick={goToSettings}>
+					<button onclick={goToSettings}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 24 24"
@@ -58,7 +74,7 @@
 							></path>
 						</svg>
 						Settings
-					</a>
+					</button>
 				</li>
 				<li>
 					<button onclick={handleSignOut} class="text-error">

@@ -137,14 +137,14 @@
 	});
 </script>
 
-<!-- Floating Pro Tip Modal (No Background Overlay) - EDUCATION CONTENT -->
+<!-- Floating Pro Tip Modal - EDUCATION CONTENT -->
 {#if showProTipModal && proTipData}
-	<div class="animate-fade-in fixed top-20 right-4 z-50 w-96 max-w-[calc(100vw-2rem)]">
+	<div class="animate-fade-in fixed top-20 right-2 z-50 w-[calc(100vw-1rem)] sm:right-4 sm:w-96 sm:max-w-[calc(100vw-2rem)]">
 		<div class="card border-2 border-neutral-content/30 bg-neutral shadow-2xl">
-			<div class="card-body p-4">
+			<div class="card-body p-3 sm:p-4">
 				<div class="mb-2 flex items-start justify-between">
 					<div class="flex items-center gap-2">
-						<span class="text-2xl">📊</span>
+						<span class="text-xl sm:text-2xl">📊</span>
 						<div>
 							<span class="text-sm font-bold text-neutral-content">Data Insight</span>
 							<p class="text-xs text-neutral-content/60">Why this works</p>
@@ -168,13 +168,13 @@
 <!-- Main Container -->
 <div class="flex h-full flex-col rounded-lg bg-base-100 shadow-xl">
 	<!-- Header - Fixed -->
-	<div class="shrink-0 border-b border-base-300 px-4 py-3">
+	<div class="shrink-0 border-b border-base-300 px-3 py-2 sm:px-4 sm:py-3">
 		<div class="flex items-center gap-3">
-			<div class="flex h-10 w-10 items-center justify-center rounded-full bg-neutral">
-				<span class="text-xl">🎨</span>
+			<div class="flex h-8 w-8 items-center justify-center rounded-full bg-neutral sm:h-10 sm:w-10">
+				<span class="text-lg sm:text-xl">🎨</span>
 			</div>
 			<div>
-				<h2 class="text-base font-semibold">Prompt Coach</h2>
+				<h2 class="text-sm font-semibold sm:text-base">Prompt Coach</h2>
 				<p class="text-xs text-base-content/60">Your AI creative partner</p>
 			</div>
 		</div>
@@ -183,18 +183,18 @@
 	<!-- Messages Area - SCROLLABLE -->
 	<div
 		bind:this={chatContainer}
-		class="flex-1 space-y-3 overflow-y-auto p-4"
+		class="flex-1 space-y-3 overflow-y-auto p-2 sm:p-4"
 		style="max-height: calc(100vh - 250px);"
 	>
 		<!-- Quick Start Buttons (only at start) -->
 		{#if $workflowContext.chatHistory.length === 1}
 			<div class="mb-4 space-y-2">
 				<p class="text-xs text-base-content/60">Quick starts:</p>
-				<div class="flex flex-wrap gap-2">
+				<div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
 					{#each quickStarts as suggestion}
 						<button
 							on:click={() => handleQuickStart(suggestion)}
-							class="btn gap-1 btn-outline btn-xs hover:btn-neutral"
+							class="btn w-full gap-1 btn-outline btn-xs hover:btn-neutral sm:w-auto"
 						>
 							<span class="text-sm">{suggestion.emoji}</span>
 							<span class="text-xs">{suggestion.text}</span>
@@ -210,8 +210,8 @@
 				<!-- Avatar -->
 				<div class="shrink-0">
 					<div class="avatar">
-						<div class="w-7 rounded-full {message.role === 'user' ? 'bg-neutral' : 'bg-base-300'}">
-							<span class="flex h-full items-center justify-center text-sm">
+						<div class="w-6 rounded-full sm:w-7 {message.role === 'user' ? 'bg-neutral' : 'bg-base-300'}">
+							<span class="flex h-full items-center justify-center text-xs sm:text-sm">
 								{message.role === 'user' ? '👤' : 'AI'}
 							</span>
 						</div>
@@ -220,7 +220,7 @@
 
 				<!-- Message Bubble -->
 				<div
-					class="max-w-[75%] rounded-lg px-3 py-2 text-sm {message.role === 'user'
+					class="max-w-[85%] rounded-lg px-3 py-2 text-sm sm:max-w-[75%] {message.role === 'user'
 						? 'bg-neutral text-neutral-content'
 						: 'bg-base-200 text-base-content'}"
 				>
@@ -250,7 +250,7 @@
 				</div>
 
 				{#each suggestedPrompts as prompt, index}
-					<div class="ml-22 max-w-3/5 rounded-lg border border-success/30 bg-success/10 p-3">
+					<div class="w-full rounded-lg border border-success/30 bg-success/10 p-2 sm:max-w-[60%] sm:p-3">
 						<div class="mb-2 flex items-center justify-between">
 							<div class="flex items-center gap-2">
 								<span class="badge badge-xs badge-success">#{index + 1}</span>
@@ -278,7 +278,7 @@
 
 		<!-- Workflow Hint -->
 		{#if $workflowContext.contentType && suggestedPrompts.length === 0}
-			<div class="bg-info/10c ml-22 max-w-3/5 rounded-lg border border-info/30 p-2">
+			<div class="w-full rounded-lg border border-info/30 bg-info/10 p-2 sm:max-w-[60%]">
 				<p class="text-xs text-info">
 					💡 Once we create your {$workflowContext.contentType}, we'll refine it to perfection, then
 					bring it to life!
@@ -288,22 +288,22 @@
 	</div>
 
 	<!-- Input Area - Fixed at Bottom -->
-	<div class="shrink-0 border-t border-base-300 p-3">
-		<form on:submit|preventDefault={sendMessage} class="max-w-full">
+	<div class="shrink-0 border-t border-base-300 p-2 sm:p-3">
+		<form on:submit|preventDefault={sendMessage} class="w-full">
 			<div class="flex items-end gap-2">
 				<textarea
 					bind:value={userInput}
 					on:keydown={handleKeyPress}
 					placeholder="What do you want to create?"
 					disabled={isLoading}
-					class="textarea-bordered textarea ml-22 max-w-3/5 flex-1 resize-y bg-base-200 text-sm textarea-sm focus:outline-neutral disabled:opacity-50"
+					class="textarea-bordered textarea w-full flex-1 resize-y bg-base-200 text-sm textarea-sm focus:outline-neutral disabled:opacity-50"
 					rows="1"
-					style="min-height: 60px; max-height: 200px;"
+					style="min-height: 50px; max-height: 200px;"
 				></textarea>
 				<button
 					type="submit"
 					disabled={isLoading || !userInput.trim()}
-					class="btn shrink-0 px-4 btn-sm btn-neutral"
+					class="btn shrink-0 px-3 btn-sm btn-neutral sm:px-4"
 				>
 					{#if isLoading}
 						<span class="loading loading-xs loading-spinner"></span>
@@ -312,7 +312,7 @@
 					{/if}
 				</button>
 			</div>
-			<p class="mt-1 text-xs text-base-content/40">
+			<p class="mt-1 hidden text-xs text-base-content/40 sm:block">
 				💡 Describe what you want to create (Shift+Enter for new line)
 			</p>
 		</form>
